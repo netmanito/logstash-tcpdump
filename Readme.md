@@ -43,11 +43,11 @@ Once you have tcpdump capturing data, you cand send data in different ways. For 
 
 	tail -F tcpdump.log | nc LOGSTASH_INPUT 5046
 
-If you're running with **Kafka** in the middle, topic is set to **tcpdump** and the parsing options are in ** */logstash-tcpdump/conf.d/10-tcpdump.conf***.
-
 ### GEOIP
 
-GeoIP is configured on parse options for **srcIP** field, this will get geoposition coords of every IP from the field, and will available for kibana mapping feature.
+These options are for elasticsearch **v5.x**, it's not been tried on **ES6** yet.
+
+GeoIP is configured on parse options for **srcIP** field, this will get geoposition coords of every IP from the field, and will available for kibana mapping feature, you can change to **destIP** if you like.
 
 You need **ingest-geoip** module installed in your elastisearch cluster, just do
 
