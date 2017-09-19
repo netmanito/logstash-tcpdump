@@ -1,20 +1,8 @@
 # Logstash Docker from original elastic docker image
 
-Creates 2 logstash docker container with tcpdump parse options to ne used with Apache kafka as a broker.
-
+Creates a logstash docker container with tcpdump parse options and sends to elasticsearch.
 
 ### Contents
-
-Logstash Ingest pipeline files sends events to KAFKA
-
-
-#### logstash-kafka:
-
-Logstash config for receiving logs from tcpdump file and send to *Kafka*
-
-	logstash-kafka/conf.d/
-		00-tcpdump-input.conf --> recieves messages from tcpdump `cat tcpdump.log | nc logstash 5046`
-		99-output.conf --> sends message to Kafka with the topic tcpdump
 
 #### logstash-tcpdump:
 
@@ -29,25 +17,19 @@ Directory includes some index templates and kibana visualizations example for ge
 Logstash Parser pipeline files processes **data** and sends it to Elasticsearch are in directory **conf.d**
 
 	logstash-tcpdump/conf.d:
-		00-kafka-input.conf --> Input data from KAFKA
+		00-tcpdump-input.conf --> Input data from netcat
 		10-tcpdump.conf --> parse tcpdump message
 		99-output.conf --> output to elasticsearch
 
-
-These files are suitable for creating either front and back logstash services to work with KAFKA in the middle.
-
-
-	DATA --> Logstash Ingest --> KAFKA <-- Logstash Parser --> Elasticsearch <-- Kibana
-
-It has been tried with docker-kafka image from https://github.com/wurstmeister/kafka-docker
-
 ### Build
 
-Using docker-compose it will build 2 docker containers, one for **ingest** and one for **parser**.
+In main directory run 
 
-This wont start anky KAFKA service so, you'll need to run a **Kafka** instance in other place and change the IP in *KAFKA_HOST* variable on Dockerfiles and docker-compose.yml to suit your requirements
+	sudo docker build -it logstash:tcpdump .
 
-	docker-composer up
+### Run
+
+	sudo docker run -p 5046:5046 -it logstash:tcpdump
 
 ### Use
 
