@@ -25,11 +25,11 @@ Logstash Parser pipeline files processes **data** and sends it to Elasticsearch 
 
 In main directory run 
 
-	sudo docker build -t logstash:tcpdump .
+	docker build -t logstash:tcpdump .
 
 ### Run
 
-	sudo docker run -p 5046:5046 -it logstash:tcpdump
+	docker run -p 5046:5046 -it logstash:tcpdump
 
 ### Use
 
