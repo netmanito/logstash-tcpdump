@@ -1,4 +1,4 @@
-FROM docker.elastic.co/logstash/logstash:6.1.0
+FROM docker.elastic.co/logstash/logstash:6.4.0
 RUN rm -f /usr/share/logstash/pipeline/logstash.conf
 ARG ES_HOST="192.168.1.110"
 ARG ES_PORT="9200"
