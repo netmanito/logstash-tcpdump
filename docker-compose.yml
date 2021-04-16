@@ -1,23 +1,17 @@
 version: '2'
 services:
-  ingest:
-    build: ./logstash-kafka
+  tcpdump:
+    build: ./
     environment:
-      - KAFKA_HOST="192.168.1.123"
-      - KAFKA_PORT=9092
+      - ES_HOST=${ES_HOST}
+      - LOGSTASH_USER=${LOGSTASH_USER}  
+      - PASSWORD=${PASSWORD}  
+    volumes:
+      - ${PATH_CONF}/:/usr/share/logstash/pipeline/
+      - ${PATH_LOGS}/:/logs/
     ports:
       - 5046:5046
     networks:
       - esnet
-  parser:
-    build: ./logstash-tcpdump
-    environment:
-      - KAFKA_HOST="192.168.1.123"
-      - KAFKA_PORT=9092
-      - ES_HOST="192.168.1.227"
-      - ES_PORT="9200"
-    networks:
-      - esnet
-
 networks:
   esnet:
